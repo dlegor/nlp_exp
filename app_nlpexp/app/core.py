@@ -4,9 +4,7 @@ from spacy import displacy
 import pandas as pd
 from PIL import Image
 from SessionState import get
-
 from typing import Any
-#from app_basic import get
 
 #Text Examples
 TEXT1="Durante el Ejercicio Fiscal 2013, se invirtieron mas recursos a este tipo de obras."
@@ -27,7 +25,11 @@ def process_text(model_name, text):
 
 @st.cache()
 def load_image():
-    return Image.open('images/nlp.jpeg')
+    try:
+        return Image.open('images/nlp.jpeg')
+    except:
+        return Image.open('app/images/nlp.jpeg')
+
 
 
 def statistic_text(text_input:str,nlp)->Any:
@@ -42,45 +44,45 @@ def statistic_text(text_input:str,nlp)->Any:
 def documentation():
     st.markdown("""
     
-    Para conocer más al respecto consulta los siguientes links.\n\n
+    If you want to know more about it, check the links:.\n\n
 
     """)
 
     st.sidebar.markdown("""
-    Selecciona los conceptos sobre los cuales deseas ver información.
+    Select the topics for more information.
     """)
-    a1=st.sidebar.checkbox(label='Minería de Texto',value=True)
-    a2=st.sidebar.checkbox(label='Procesamiento de Lenguaje Natural',value=True)
-    a3=st.sidebar.checkbox(label='Modelo de Lenguaje',value=True)
+    a1=st.sidebar.checkbox(label='Text Mining',value=True)
+    a2=st.sidebar.checkbox(label='Natural language processing',value=True)
+    a3=st.sidebar.checkbox(label='Language Model',value=True)
     a4=st.sidebar.checkbox(label='POS tagging')
     a5=st.sidebar.checkbox(label='Chunks')
     a6=st.sidebar.checkbox(label='Token')
     a7=st.sidebar.checkbox(label='NER')
-    a8=st.sidebar.checkbox(label='Representación Vectorial y Embedding')
+    a8=st.sidebar.checkbox(label='Vector Representation and Embeddings')
 
     if a1:
         st.markdown("""\n\n
 
-        Minería de Texto:
+        Text Mining:
         
         * [Wikipedia](https://es.wikipedia.org/wiki/Miner%C3%ADa_de_textos#:~:text=La%20miner%C3%ADa%20de%20textos%20es,est%C3%A1%20expl%C3%ADcita%20dentro%20del%20texto.)
-        * [Libro: Text Mining with R ](https://www.tidytextmining.com/)
+        * [Book: Text Mining with R ](https://www.tidytextmining.com/)
         
         \n""")
     if a2:
         st.markdown("""
-        Procesamiento de Lenguaje Natural
+        Natural language processing
         
         * [Wikipedia](https://es.wikipedia.org/wiki/Procesamiento_de_lenguajes_naturales)
-        * [Libro: Natural Lenguage Processing with Pytho](https://www.nltk.org/book/)
+        * [Book: Natural Lenguage Processing with Pytho](https://www.nltk.org/book/)
         
         """)
     if a3:
         st.markdown("""
-        Modelo de Lenguaje
+        Language Model
         
         * [Wikipedia](https://es.wikipedia.org/wiki/Modelaci%C3%B3n_del_lenguaje)
-        * [Libro: Speech and Lenguage Processing](http://web.stanford.edu/~jurafsky/slp3/3.pdf)
+        * [Book: Speech and Lenguage Processing](http://web.stanford.edu/~jurafsky/slp3/3.pdf)
         
         """)
     if a4:
@@ -88,7 +90,7 @@ def documentation():
         Part-of-speech tagging(POS-tagging) 
         
         * [Wikipedia](https://es.wikipedia.org/wiki/Etiquetado_gramatical)
-        * [Libro: Speech and Lenguage Processing](http://web.stanford.edu/~jurafsky/slp3/8.pdf)
+        * [Book: Speech and Lenguage Processing](http://web.stanford.edu/~jurafsky/slp3/8.pdf)
         
         """)
     if a5:
@@ -96,7 +98,7 @@ def documentation():
         Chunks 
         
         * [Wikipedia](https://en.wikipedia.org/wiki/Phrase_chunking)
-        * [Libro: Natural Lenguage Processing with Pytho ](http://www.nltk.org/book/ch07.html)
+        * [Book: Natural Lenguage Processing with Pytho ](http://www.nltk.org/book/ch07.html)
         
         """)
     if a6:
@@ -104,7 +106,7 @@ def documentation():
         Token 
         
         * [Wikipedia](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization)
-        * [Libro: Introduction to Information Retrieval](https://nlp.stanford.edu/IR-book/html/htmledition/tokenization-1.html)
+        * [Book: Introduction to Information Retrieval](https://nlp.stanford.edu/IR-book/html/htmledition/tokenization-1.html)
         
         """)
     if a7:
@@ -112,53 +114,41 @@ def documentation():
         Named-entity recognition
         
         * [Wikipedia](https://es.wikipedia.org/wiki/Reconocimiento_de_entidades_nombradas)
-        * [Curso: From Languages to Information](https://web.stanford.edu/class/cs124/lec/Information_Extraction_and_Named_Entity_Recognition.pdf)
+        * [Course: From Languages to Information](https://web.stanford.edu/class/cs124/lec/Information_Extraction_and_Named_Entity_Recognition.pdf)
         
         """)
 
     if a8:
         st.markdown("""
-        Representación Vectorial y Embedding
+        Vector Representation y Embedding
         
         
         * [Wikipedia](https://es.wikipedia.org/wiki/Modelo_de_espacio_vectorial)
         * [Wikipedia: Embedding](https://es.wikipedia.org/wiki/Word_embedding)
-        * [Libro: Speech and Lenguage Processing](http://web.stanford.edu/~jurafsky/slp3/6.pdf)
+        * [Book: Speech and Lenguage Processing](http://web.stanford.edu/~jurafsky/slp3/6.pdf)
         
         """)
 
-    
-
-
-
-
-
-
-
-
-
-
 def main():
-#    st.image(load_image())
-#    st.title("Aplicación Demo Minería de Textos")
+    " Main function for the app to work"
     st.sidebar.title("Natural Language Processing")
-    t1=st.sidebar.selectbox(label="Selecciona un Texto",options=['Texto 1','Texto 2','Texto 3'])
+    t1=st.sidebar.selectbox(label="Select Text",options=['Text 1','Text 2','Text 3'])
 
 
-    spacy_model = st.sidebar.selectbox("Modelo de Lenguaje", SPACY_MODEL_NAMES,index=1)
-    model_load_state = st.info("Cargando el Modelo de Lenguaje {}".format(spacy_model))
+    spacy_model = st.sidebar.selectbox("Language Model", SPACY_MODEL_NAMES,index=1)
+    model_load_state = st.info("Uploading Language model {}".format(spacy_model))
     nlp = load_model(spacy_model)
     model_load_state.empty()
 
-    if t1=='Texto 1':
-        text = st.text_area("Texto a analizar", TEXT1)
-        st.text("Puedes editar el texto que se muestra arriba.")
-    elif t1=='Texto 2':
-        text = st.text_area("Texto a analizar", TEXT2)
-        st.text("Puedes editar el texto que se muestra arriba.")
-    elif t1=='Texto 3':
-        text = st.text_area("Texto a analizar", TEXT3)
-        st.text("Puedes editar el texto que se muestra arriba.")
+    if t1=='Text 1':
+        text = st.text_area("Input Text", TEXT1)
+        st.text("You can edit the text above.")
+    elif t1=='Text 2':
+        text = st.text_area("Input Text", TEXT2)
+        st.text("You can edit the text above..")
+    elif t1=='Text 3':
+        text = st.text_area("Input Text", TEXT3)
+        st.text("You can edit the text above..")
     else:
         st.info("Error")
 
@@ -193,12 +183,12 @@ def main():
         # st.sidebar.info("Si no se visualiza la imagen,prueba una a una las opciones.")
 
     if "ner" in nlp.pipe_names:
-        st.header("Entidades Reconocidas")
-        st.sidebar.header("Entidades en el Modelo")
+        st.header("NER")
+        st.sidebar.header("NER in the Model")
     
          #default_labels = ["PERSON", "ORG", "GPE", "LOC"]
         default_labels =nlp.pipe_labels['ner']
-        labels = st.sidebar.multiselect("Tipo de Entidades", nlp.get_pipe("ner").labels, default_labels)
+        labels = st.sidebar.multiselect("NER type", nlp.get_pipe("ner").labels, default_labels)
         html = displacy.render(doc, style="ent", options={"ents": labels})
         # Newlines seem to mess with the rendering
         html = html.replace("\n", " ")
@@ -221,9 +211,9 @@ def main():
  #       df = pd.DataFrame(doc.cats.items(), columns=("Label", "Score"))
  #       st.dataframe(df)
 
-    st.header("Token y Atributos")
+    st.header("Tokens and  Attributes")
 
-    if st.button("Mostrar atributos"):
+    if st.button("Show Attributes"):
         attrs = [
             "idx",
             "text",
@@ -248,10 +238,10 @@ def main():
     st.header("Vector")
     vector_size = nlp.meta.get("vectors", {}).get("width", 0)
     if vector_size:
-        st.subheader("Vectores & Similaridad")
+        st.subheader("Vectors and Similarity")
         #st.code(nlp.meta["vectors"])
-        text1 = st.text_input("Oración o Palabra 1", text)
-        text2 = st.text_input("Oración o Palabra 2", "Transparencia Presupuestaria")
+        text1 = st.text_input("Sentence or Word 1", text)
+        text2 = st.text_input("Sentence o Word 2", "Goberno")
         doc1 = process_text(spacy_model, text1)
         doc2 = process_text(spacy_model, text2)
         similarity = doc1.similarity(doc2)
@@ -259,19 +249,19 @@ def main():
             st.success(similarity)
         else:
             st.error(similarity)
-        st.text("Puedes editar los textos de las oraciones.")
+        st.text("You can edit the sentence text.")
 
         
-    st.sidebar.header("Estadísticas Generales")
+    st.sidebar.header("Statistics")
 
-    if st.sidebar.checkbox(label="Mostrar",value=True):
-        st.subheader("Estadísticas Generales")
+    if st.sidebar.checkbox(label="Show",value=True):
+        st.subheader("Statistics")
         num_char,Nnoun_chunks,NToken,NVerbs,SinStopWords=statistic_text(text_input=text,nlp=nlp)
-        Dic_Stat={'Caracteres en la Sentencia':num_char,
+        Dic_Stat={'Sentence Chars':num_char,
         'Num Chunks':Nnoun_chunks,
         'Num Tokens': NToken,
-        'Num Verbos':NVerbs,
-        'Num de palabras sin StopWords': SinStopWords}
+        'Num Verbs':NVerbs,
+        'Num StopWords': SinStopWords}
         st.write(Dic_Stat)
 
 
@@ -286,11 +276,11 @@ if session_state.password != "Xl8#deFG?dg":
     if session_state.password == "Xl8#deFG?dg":
         pwd_placeholder.empty()
         st.image(load_image())
-        st.title("Aplicación Demo Minería de Textos")
-        optiones=st.sidebar.selectbox(label='Opciones',options=['Demo','Documentación'])
+        st.title("App Demo NLP Techniques")
+        optiones=st.sidebar.selectbox(label='Options',options=['Demo','Documentation'])
         if optiones=='Demo':
             main()
-        elif optiones=='Documentación':
+        elif optiones=='Documentation':
             documentation()
 
     else:
@@ -298,10 +288,10 @@ if session_state.password != "Xl8#deFG?dg":
         st.stop()
 else:
     st.image(load_image())
-    st.title("Aplicación Demo Minería de Textos")
-    optiones=st.sidebar.selectbox(label='Opciones',options=['Demo','Documentación'])
+    st.title("App Demo NLP Techniques")
+    optiones=st.sidebar.selectbox(label='Options',options=['Demo','Documentation'])
     if optiones=='Demo':
         main()
-    elif optiones=='Documentación':
+    elif optiones=='Documentation':
         documentation()
 
