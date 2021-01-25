@@ -1,0 +1,36 @@
+name: nlpexp-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python
+  - beautifulsoup4=4.9.*
+  - conda-forge::blas=*=openblas
+  - bottleneck=1.3.*
+  - cython=0.29.*
+  - jupyterlab 
+  - matplotlib-base=3.3.*
+  - numba=0.51.*
+  - numexpr=2.7.*
+  - pandas=1.1.*
+  - patsy=0.5.*
+  - pip 
+  - protobuf=3.13.*
+  - pylint
+  - scikit-learn=0.23.*
+  - scipy=1.5.*
+  - seaborn=0.11.*
+  - sympy
+  - umap-learn
+  - pip:
+    - pyarrow
+    - streamlit
+    - spacy
+    - sentence-transformers
+    - fuzzywuzzy[speedup]
+    - https://github.com/explosion/spacy-models/releases/download/es_core_news_sm-2.3.1/es_core_news_sm-2.3.1.tar.gz
+    - https://github.com/explosion/spacy-models/releases/download/es_core_news_md-2.3.1/es_core_news_md-2.3.1.tar.gz
+    - https://github.com/explosion/spacy-models/releases/download/es_core_news_lg-2.3.1/es_core_news_lg-2.3.1.tar.gz
+
+
+
